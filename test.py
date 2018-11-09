@@ -29,10 +29,10 @@ def parse_jobs(html):
     return jobs
 
 jobs = []
+#create a session and choose a user agent to emulate an actual browser
 s = requests.Session()
 headers = {
-    'User-Agent': 'My User Agent 1.0',
-    'From': 'youremail@domain.com'  # This is another valid field
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
 }
 
 for start in range(0,100,10):
@@ -42,12 +42,14 @@ for start in range(0,100,10):
     for job in parse_jobs(r.text):
         jobs.append(job)
 
+#remove duplicates
 tmp = jobs
 jobs = []
 for job in tmp:
     if job not in jobs:
         jobs.append(job)
 
+#spit out job info
 for job in jobs:
     info_string = f'''
 {job['title']}
